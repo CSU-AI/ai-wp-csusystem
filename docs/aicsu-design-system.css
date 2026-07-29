@@ -333,6 +333,13 @@
 .aicsu-card--news       { --aicsu-accent: var(--aicsu-red);   }
 .aicsu-card--governance { --aicsu-accent: var(--aicsu-blue);  }
 
+/* Two card rows are two separate Columns blocks. The theme zeroes block
+   margins, so consecutive rows meet with no gap and the second row's accent
+   keyline lands flush against the first row's bottom border, which reads as
+   one 6-cell table rather than two rows of cards. Matches the in-row gap so
+   horizontal and vertical rhythm agree. */
+.aicsu-cards + .aicsu-cards { margin-top: var(--aicsu-space-3); }
+
 /* Cards sitting on a tinted section keep a white face so they lift off it. */
 .aicsu-section--sand .aicsu-card,
 .aicsu-section--sky .aicsu-card,
@@ -414,6 +421,15 @@
 .aicsu-section--blue .wp-block-button.aicsu-btn--secondary .wp-element-button:hover {
   background-color: var(--aicsu-white);
   color: var(--aicsu-blue);
+}
+
+/* The theme zeroes margins on a Buttons block, so a section-level CTA sits
+   flush against whatever precedes it (a callout, a link list, a paragraph).
+   Card CTAs are excluded: .aicsu-card__cta uses margin-top: auto to pin
+   itself to the card's bottom edge, and a fixed margin here would cancel
+   that and unalign every button in the row. */
+.aicsu-inner .wp-block-buttons:not(.aicsu-card__cta) {
+  margin-top: var(--aicsu-space-4);
 }
 
 /* Smaller CTA for inside cards. */
@@ -616,6 +632,17 @@
   z-index: 2;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
+/* The footer has the same fault at the other end, and no seam fixes it: the
+   theme footer is painted Pueblo Blue (#1F2759), the exact value of
+   .aicsu-section--blue. A blue section placed last runs into the footer as
+   one unbroken navy field, and any hairline drawn between two identical
+   navies reads as a rendering artifact rather than an edge.
+
+   So the footer is the page's closing blue block. A page ends on white or a
+   tint; it does not end on .aicsu-section--blue. Enforcing that in CSS would
+   mean overriding an author's chosen modifier, which is worse than the
+   problem, so it stays a layout rule. */
 
 
 /* --------------------------------------------------------------------------
