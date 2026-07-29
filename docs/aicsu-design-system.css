@@ -311,6 +311,25 @@
   margin-bottom: var(--aicsu-space-3);
 }
 
+/* A solid accent disc makes the card's subject immediately scannable. The
+   icon stays white while each card inherits its existing territory accent,
+   keeping this visual cue aligned with the keyline rather than adding a new
+   color system. */
+.aicsu-card__icon {
+  align-items: center;
+  background-color: var(--aicsu-accent);
+  border-radius: 50%;
+  color: var(--aicsu-white);
+  display: inline-flex;
+  font-size: 1.5rem;
+  height: 3.25rem;
+  justify-content: center;
+  margin: 0 0 1.25rem;
+  width: 3.25rem;
+}
+
+.aicsu-card__icon .fa-solid { line-height: 1; }
+
 /* Pushes the CTA to the bottom edge so every card's button lines up,
    however long the heading or body copy runs. */
 .aicsu-card__cta {
