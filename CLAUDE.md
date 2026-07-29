@@ -18,6 +18,28 @@ names, different palette. Do not carry Fort Collins colors into this repo.
   **Additional CSS class** field. Never write inline styles.
 - Accessibility target is WCAG 2.1 AA.
 
+## Theme facts
+
+Established by inspection, 07/2026. The theme is `csu-theme`; body carries
+`wp-theme-csu-theme`. These change how CSS must be written, so check them
+before adding a selector.
+
+- **The theme rewrites button markup.** Core's `wp-block-button__link` is
+  replaced with `btn btn__md wp-element-button`. Every button selector must
+  name both, or it matches nothing on the rendered page.
+- **The theme strips `wp-block-column`** off Column blocks. Card rules key off
+  `.aicsu-card`, never the core class.
+- **Group blocks render an inner `.wp-block-group__inner-container`.** A child
+  selector like `.aicsu-inner > .wp-block-buttons` matches nothing; the buttons
+  are grandchildren.
+- **No `page-id-*` body class is emitted.** Page-scoped rules use WordPress's
+  own body classes (`.home`, `.page`) instead.
+- **The theme zeroes block margins.** Consecutive blocks meet flush. Any
+  spacing between blocks comes from the design system.
+- **The footer is painted Pueblo Blue `#1F2759`**, the same value as
+  `aicsu-section--blue`. A page does not end on a blue section.
+- The theme page-title band is `main .page-header`, one per page.
+
 ## Palette
 
 Source: CSU System Brand Guidelines, 04/2020. The Fort Collins "Find Your Energy"
@@ -114,11 +136,15 @@ cards from a shared pair must never appear in the same row.
 
 - Fix problems in the CSS layer or in a synced pattern, never on an individual page.
   If a card looks wrong on one page, it is wrong everywhere.
-- Create pages as **draft**. Never publish directly.
+- Local is a dev site with no public access, so edit and publish there freely.
+  On production, create pages as **draft**. Never publish directly.
 - Compare styling variants by pointing different CSS at the same page markup.
   Do not rebuild the page to compare looks.
 - Prefer CSS and inline SVG over images. Images have to be re-uploaded on production.
 - Screenshot the rendered page and review it there. Do not judge layout from markup.
+- A draft preview (`?page_id=N&preview=true`) does not carry the `.home` body
+  class, so homepage-scoped rules cannot be verified there. Check those on the
+  real homepage after the content lands.
 
 ## Feedback vocabulary
 
@@ -141,10 +167,11 @@ density, type contrast, accent count, section rhythm, image discipline, alignmen
 
 AI Engine and Tools > Import are both available on production, so either path works.
 
-1. **Custom CSS** — one-time: add a `<link rel="stylesheet" href="https://<pages-url>/aicsu-design-system.css">`
-   to the theme (or a header snippet plugin) on production, pointed at the GitHub
-   Pages URL. After that, pushes to `docs/aicsu-design-system.css` go live on both
-   local and production automatically. No more manual re-paste.
+1. **Custom CSS** — one-time: add
+   `<link rel="stylesheet" href="https://csu-ai.github.io/ai-wp-csusystem/aicsu-design-system.css">`
+   to the theme (or a header snippet plugin) on production. Local is already
+   pointed at that same URL. After that, pushes to `docs/aicsu-design-system.css`
+   go live on both local and production automatically. No more manual re-paste.
 2. **Pages** — either re-run the same MCP `create_post` calls against production, or
    export from local and use Tools > Import. Prefer MCP for single pages, WXR export
    for batches.
