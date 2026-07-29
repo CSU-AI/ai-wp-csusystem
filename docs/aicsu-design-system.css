@@ -620,14 +620,16 @@
 
 /* --------------------------------------------------------------------------
    12. THEME TITLE BAND
-   The theme prints a page-title banner ("Home") above page content, which
-   duplicates the H1 in the hero. Inspect that element on the live page,
-   copy its selector, and uncomment the rule below.
+   The theme prints a page-title banner above page content, which duplicates
+   the H1 in the hero.
 
-   Only hide it on pages where the hero already carries the H1. Do not hide
-   it sitewide, since interior pages rely on it for orientation.
+   The theme emits no page-id-* body class, so the homepage is targeted by
+   WordPress's own .home class. The band itself is main > .page-header, and
+   .page-header appears exactly once per page, so main scopes it away from
+   any same-named element the header or footer might use.
+
+   Homepage only. Interior pages have no hero and rely on this band for
+   orientation, so it is not hidden sitewide.
    -------------------------------------------------------------------------- */
 
-/*
-.page-id-XXX .REPLACE-WITH-THEME-TITLE-BAND-SELECTOR { display: none; }
-*/
+.home main .page-header { display: none; }
