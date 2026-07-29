@@ -1,13 +1,14 @@
 /* ==========================================================================
-   AI @ CSU Fort Collins - Design System Layer
-   ai.colostate.edu
+   AI @ CSU System - Design System Layer
+   ai.csusystem.edu
    --------------------------------------------------------------------------
    It adds a namespaced layer on top of the existing theme. It does not
    modify the theme, and every class is prefixed .aicsu- so nothing here
    can collide with theme or Elementor styles.
 
-   All colors and pairings come from https://brand.colostate.edu/color/
-   Only pairings listed on CSU's accessibility chart are used.
+   All colors come from the CSU System Brand Guidelines (04/2020).
+   That guide publishes no accessibility chart, so every pairing used here
+   was measured against WCAG 2.1 and the ratio is noted inline.
    ========================================================================== */
 
 
@@ -17,43 +18,52 @@
 
 :root {
 
-  /* --- CSU primary palette --- */
-  --aicsu-green:        #1E4D2B;   /* Colorado State Green */
-  --aicsu-gold:         #C8C372;   /* Colorado State Gold */
-  --aicsu-orange:       #D9782D;   /* Aggie Orange */
-  --aicsu-black-80:     #59595B;   /* 80% Black */
+  /* --- Primary palette ---
+     Brand hierarchy is Pueblo Blue 60%, CSU Gold 20%, Global Red 20%. */
+  --aicsu-blue:         #1F2759;   /* Pueblo Blue */
+  --aicsu-gold:         #C7C271;   /* CSU Gold    */
+  --aicsu-red:          #AA1E40;   /* Global Red  */
   --aicsu-white:        #FFFFFF;
 
-  /* --- Energy palette (secondary) --- */
-  --aicsu-oval-green:   #006144;
-  --aicsu-lovers-lane:  #82C503;
-  --aicsu-energy-green: #CFFC00;
-  --aicsu-red:          #E56A54;   /* Flower Trial Red */
-  --aicsu-purple:       #7E5475;   /* Powered Purple */
-  --aicsu-blue:         #008FB3;   /* Horsetooth Blue */
-  --aicsu-slate:        #105456;   /* Stalwart Slate */
-  --aicsu-sunshine:     #FFC038;
+  /* --- Secondary palette (tints) ---
+     Backgrounds only. None of these carry text on white. */
+  --aicsu-rose:         #C7A2A5;
+  --aicsu-pewter:       #99AFB6;
+  --aicsu-light-gold:   #CDC79B;
+  --aicsu-blush:        #E5DCDE;
+  --aicsu-sky:          #CAD8DC;
+  --aicsu-sand:         #DDDBC7;
+
+  /* --- Tertiary palette ---
+     Accents, used sparingly. Poppy and Ocean are below 4.5:1 on white,
+     so they are keylines and graphics only, never body text. */
+  --aicsu-poppy:        #F15647;
+  --aicsu-ocean:        #37A0A5;
+  --aicsu-slate:        #59595B;
 
   /* --- Neutrals --- */
   --aicsu-black:        #000000;
-  --aicsu-gray:         #CCCCCC;
-  --aicsu-tan:          #E3CDB1;
 
   /* Functional neutrals. Not brand colors, used only for hairlines and
      table banding where no brand color applies. */
   --aicsu-rule:         #DCDCDC;
   --aicsu-band:         #F7F7F7;
 
-  /* --- Semantic roles --- */
-  --aicsu-ink:          var(--aicsu-black);      /* body text on white, AAA */
-  --aicsu-ink-muted:    var(--aicsu-black-80);   /* meta text on white, AA  */
-  --aicsu-heading:      var(--aicsu-green);      /* headings on white, AAA  */
-  --aicsu-link:         var(--aicsu-oval-green); /* links on white, AAA     */
-  --aicsu-accent:       var(--aicsu-green);      /* per-territory keyline   */
+  /* --- Semantic roles ---
+     Ratios are against white unless stated. */
+  --aicsu-ink:          var(--aicsu-black);   /* body text,  21.00  AAA */
+  --aicsu-ink-muted:    var(--aicsu-slate);   /* meta text,   6.99  AA  */
+  --aicsu-heading:      var(--aicsu-blue);    /* headings,   14.07  AAA */
+  --aicsu-link:         var(--aicsu-red);     /* links,       7.07  AAA */
+  --aicsu-accent:       var(--aicsu-blue);    /* per-territory keyline  */
+  --aicsu-focus:        var(--aicsu-red);     /* focus ring,  7.07      */
 
   /* --- Type scale ---
      Deliberately steep at the top and shallow at the bottom. The old page
-     failed because card headings were nearly the size of the page title. */
+     failed because card headings were nearly the size of the page title.
+     The brand guide caps a single design at four type sizes and three
+     weights; a page uses h1, h2, h3 and body, plus the eyebrow only where
+     it replaces a heading. */
   --aicsu-size-h1:      clamp(2.25rem, 1.6rem + 2.8vw, 3.75rem);
   --aicsu-size-h2:      clamp(1.625rem, 1.35rem + 1.2vw, 2.25rem);
   --aicsu-size-h3:      clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
@@ -108,36 +118,52 @@
   margin-right: auto;
 }
 
-/* Approved background / text pairings only. */
+/* Measured pairings only.
 
-.aicsu-section--green {
-  background-color: var(--aicsu-green);
-  color: var(--aicsu-white);                 /* AAA */
+   Pueblo Blue is the dominant color in the brand hierarchy, so it is the
+   only full-strength section background. The three tints carry the rest. */
+
+.aicsu-section--blue {
+  background-color: var(--aicsu-blue);
+  color: var(--aicsu-white);                 /* 14.07 AAA */
 }
-.aicsu-section--green .aicsu-eyebrow { color: var(--aicsu-energy-green); }  /* AAA */
+.aicsu-section--blue .aicsu-eyebrow { color: var(--aicsu-gold); }  /* 7.63 AAA */
 /* Doubled class selector to out-specificity .aicsu-section h1/h2/h3 below,
    which shares the same (0,1,1) weight and would otherwise win on source
-   order alone, since a green-on-green h1 goes invisible. */
-.aicsu-section.aicsu-section--green h1,
-.aicsu-section.aicsu-section--green h2,
-.aicsu-section.aicsu-section--green h3 { color: var(--aicsu-white); }
+   order alone, since a blue-on-blue h1 goes invisible. */
+.aicsu-section.aicsu-section--blue h1,
+.aicsu-section.aicsu-section--blue h2,
+.aicsu-section.aicsu-section--blue h3 { color: var(--aicsu-white); }
 
-.aicsu-section--tan {
-  background-color: var(--aicsu-tan);
-  color: var(--aicsu-green);                 /* AA */
-}
-.aicsu-section.aicsu-section--tan h1,
-.aicsu-section.aicsu-section--tan h2,
-.aicsu-section.aicsu-section--tan h3,
-.aicsu-section--tan .aicsu-eyebrow { color: var(--aicsu-green); }
+/* Tints. All three take Pueblo Blue text and headings. */
 
-.aicsu-section--gray {
-  background-color: var(--aicsu-gray);
-  color: var(--aicsu-black);                 /* AAA */
+.aicsu-section--sand {
+  background-color: var(--aicsu-sand);
+  color: var(--aicsu-blue);                  /* 10.07 AAA */
 }
-.aicsu-section.aicsu-section--gray h1,
-.aicsu-section.aicsu-section--gray h2,
-.aicsu-section.aicsu-section--gray h3 { color: var(--aicsu-green); }  /* AA */
+
+.aicsu-section--sky {
+  background-color: var(--aicsu-sky);
+  color: var(--aicsu-blue);                  /*  9.62 AAA */
+}
+
+.aicsu-section--blush {
+  background-color: var(--aicsu-blush);
+  color: var(--aicsu-blue);                  /* 10.47 AAA */
+}
+
+.aicsu-section.aicsu-section--sand h1,
+.aicsu-section.aicsu-section--sand h2,
+.aicsu-section.aicsu-section--sand h3,
+.aicsu-section.aicsu-section--sky h1,
+.aicsu-section.aicsu-section--sky h2,
+.aicsu-section.aicsu-section--sky h3,
+.aicsu-section.aicsu-section--blush h1,
+.aicsu-section.aicsu-section--blush h2,
+.aicsu-section.aicsu-section--blush h3,
+.aicsu-section--sand .aicsu-eyebrow,
+.aicsu-section--sky .aicsu-eyebrow,
+.aicsu-section--blush .aicsu-eyebrow { color: var(--aicsu-blue); }
 
 /* Tighter variant for short utility strips. */
 .aicsu-section--tight {
@@ -194,7 +220,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--aicsu-oval-green);
+  color: var(--aicsu-red);                   /* 7.07 AAA on white */
   margin-bottom: var(--aicsu-space-2);
 }
 
@@ -204,7 +230,7 @@
   max-width: 60ch;
 }
 
-.aicsu-section--green .aicsu-lede { color: rgba(255, 255, 255, 0.92); }
+.aicsu-section--blue .aicsu-lede { color: rgba(255, 255, 255, 0.92); }
 
 .aicsu-meta {
   font-size: var(--aicsu-size-small);
@@ -230,7 +256,7 @@
      widths vary with how much copy each card holds. Force equal width. */
   flex: 1 1 0 !important;
   min-width: 0;
-  --aicsu-accent: var(--aicsu-green);
+  --aicsu-accent: var(--aicsu-blue);
   display: flex;
   flex-direction: column;
   background-color: var(--aicsu-white);
@@ -241,7 +267,7 @@
   color: var(--aicsu-ink);
 }
 
-.aicsu-card h3 { color: var(--aicsu-green); }
+.aicsu-card h3 { color: var(--aicsu-blue); }
 
 .aicsu-card p {
   font-size: var(--aicsu-size-body);
@@ -258,21 +284,27 @@
 
 /* Territory keylines. The accent tells the reader which part of the site a
    card leads to. It is a wayfinding signal, not decoration, so it is used
-   in exactly one place per card and nowhere else. */
-.aicsu-card--tools     { --aicsu-accent: var(--aicsu-green); }
-.aicsu-card--teaching  { --aicsu-accent: var(--aicsu-purple); }
-.aicsu-card--research  { --aicsu-accent: var(--aicsu-blue); }
-.aicsu-card--training  { --aicsu-accent: var(--aicsu-orange); }
-.aicsu-card--support   { --aicsu-accent: var(--aicsu-slate); }
-.aicsu-card--news      { --aicsu-accent: var(--aicsu-gold); }
-.aicsu-card--governance{ --aicsu-accent: var(--aicsu-oval-green); }
+   in exactly one place per card and nowhere else.
+
+   Five accents, not seven. CSU Gold (1.84 on white) and Pewter (2.29) are
+   too faint to read as a signal, so Tools/Governance and Research/Support
+   share an accent. Cards that share an accent never sit in the same row. */
+.aicsu-card--tools      { --aicsu-accent: var(--aicsu-blue);  }
+.aicsu-card--teaching   { --aicsu-accent: var(--aicsu-ocean); }
+.aicsu-card--research   { --aicsu-accent: var(--aicsu-slate); }
+.aicsu-card--training   { --aicsu-accent: var(--aicsu-poppy); }
+.aicsu-card--support    { --aicsu-accent: var(--aicsu-slate); }
+.aicsu-card--news       { --aicsu-accent: var(--aicsu-red);   }
+.aicsu-card--governance { --aicsu-accent: var(--aicsu-blue);  }
 
 /* Cards sitting on a tinted section keep a white face so they lift off it. */
-.aicsu-section--tan .aicsu-card,
-.aicsu-section--gray .aicsu-card { border-color: transparent; }
+.aicsu-section--sand .aicsu-card,
+.aicsu-section--sky .aicsu-card,
+.aicsu-section--blush .aicsu-card { border-color: transparent; }
 
-.aicsu-section--tan .aicsu-card,
-.aicsu-section--gray .aicsu-card { border-top-color: var(--aicsu-accent); }
+.aicsu-section--sand .aicsu-card,
+.aicsu-section--sky .aicsu-card,
+.aicsu-section--blush .aicsu-card { border-top-color: var(--aicsu-accent); }
 
 
 /* --------------------------------------------------------------------------
@@ -283,9 +315,9 @@
 
 .wp-block-button.aicsu-btn--primary .wp-block-button__link,
 .wp-block-button.aicsu-btn--primary .wp-element-button {
-  background-color: var(--aicsu-green);
-  color: var(--aicsu-white);                 /* AAA */
-  border: 2px solid var(--aicsu-green);
+  background-color: var(--aicsu-blue);
+  color: var(--aicsu-white);                 /* 14.07 AAA */
+  border: 2px solid var(--aicsu-blue);
   border-radius: var(--aicsu-radius);
   padding: 0.75rem 1.5rem;
   font-weight: 700;
@@ -296,16 +328,16 @@
 
 .wp-block-button.aicsu-btn--primary .wp-block-button__link:hover,
 .wp-block-button.aicsu-btn--primary .wp-element-button:hover {
-  background-color: var(--aicsu-oval-green);
-  border-color: var(--aicsu-oval-green);
-  color: var(--aicsu-white);
+  background-color: var(--aicsu-red);
+  border-color: var(--aicsu-red);
+  color: var(--aicsu-white);                 /* 7.07 AAA */
 }
 
 .wp-block-button.aicsu-btn--secondary .wp-block-button__link,
 .wp-block-button.aicsu-btn--secondary .wp-element-button {
   background-color: transparent;
-  color: var(--aicsu-green);                 /* AAA on white */
-  border: 2px solid var(--aicsu-green);
+  color: var(--aicsu-blue);                  /* 14.07 AAA on white */
+  border: 2px solid var(--aicsu-blue);
   border-radius: var(--aicsu-radius);
   padding: 0.75rem 1.5rem;
   font-weight: 700;
@@ -316,36 +348,36 @@
 
 .wp-block-button.aicsu-btn--secondary .wp-block-button__link:hover,
 .wp-block-button.aicsu-btn--secondary .wp-element-button:hover {
-  background-color: var(--aicsu-green);
+  background-color: var(--aicsu-blue);
   color: var(--aicsu-white);
 }
 
-/* Inverted pair for use on the green hero. */
-.aicsu-section--green .wp-block-button.aicsu-btn--primary .wp-block-button__link,
-.aicsu-section--green .wp-block-button.aicsu-btn--primary .wp-element-button {
+/* Inverted pair for use on the blue hero. */
+.aicsu-section--blue .wp-block-button.aicsu-btn--primary .wp-block-button__link,
+.aicsu-section--blue .wp-block-button.aicsu-btn--primary .wp-element-button {
   background-color: var(--aicsu-white);
-  color: var(--aicsu-green);                 /* AAA */
+  color: var(--aicsu-blue);                  /* 14.07 AAA */
   border-color: var(--aicsu-white);
 }
 
-.aicsu-section--green .wp-block-button.aicsu-btn--primary .wp-block-button__link:hover,
-.aicsu-section--green .wp-block-button.aicsu-btn--primary .wp-element-button:hover {
-  background-color: var(--aicsu-energy-green);
-  border-color: var(--aicsu-energy-green);
-  color: var(--aicsu-black);                 /* AAA */
+.aicsu-section--blue .wp-block-button.aicsu-btn--primary .wp-block-button__link:hover,
+.aicsu-section--blue .wp-block-button.aicsu-btn--primary .wp-element-button:hover {
+  background-color: var(--aicsu-gold);
+  border-color: var(--aicsu-gold);
+  color: var(--aicsu-black);                 /* 11.38 AAA */
 }
 
-.aicsu-section--green .wp-block-button.aicsu-btn--secondary .wp-block-button__link,
-.aicsu-section--green .wp-block-button.aicsu-btn--secondary .wp-element-button {
+.aicsu-section--blue .wp-block-button.aicsu-btn--secondary .wp-block-button__link,
+.aicsu-section--blue .wp-block-button.aicsu-btn--secondary .wp-element-button {
   background-color: transparent;
   color: var(--aicsu-white);
   border-color: var(--aicsu-white);
 }
 
-.aicsu-section--green .wp-block-button.aicsu-btn--secondary .wp-block-button__link:hover,
-.aicsu-section--green .wp-block-button.aicsu-btn--secondary .wp-element-button:hover {
+.aicsu-section--blue .wp-block-button.aicsu-btn--secondary .wp-block-button__link:hover,
+.aicsu-section--blue .wp-block-button.aicsu-btn--secondary .wp-element-button:hover {
   background-color: var(--aicsu-white);
-  color: var(--aicsu-green);
+  color: var(--aicsu-blue);
 }
 
 /* Smaller CTA for inside cards. */
@@ -363,21 +395,21 @@
 .aicsu-callout {
   background-color: var(--aicsu-white);
   border: 1px solid var(--aicsu-rule);
-  border-left: 5px solid var(--aicsu-green);
+  border-left: 5px solid var(--aicsu-blue);
   border-radius: var(--aicsu-radius);
   padding: var(--aicsu-space-3);
   color: var(--aicsu-ink);
 }
 
-.aicsu-callout h3 { color: var(--aicsu-green); }
+.aicsu-callout h3 { color: var(--aicsu-blue); }
 .aicsu-callout p:last-child { margin-bottom: 0; }
 
-.aicsu-callout--action  { border-left-color: var(--aicsu-blue); }
+.aicsu-callout--action  { border-left-color: var(--aicsu-ocean); }
 .aicsu-callout--caution {
-  background-color: var(--aicsu-sunshine);
-  border-color: var(--aicsu-sunshine);
+  background-color: var(--aicsu-gold);
+  border-color: var(--aicsu-gold);
   border-left-color: var(--aicsu-black);
-  color: var(--aicsu-black);                 /* AAA */
+  color: var(--aicsu-black);                 /* 11.38 AAA */
 }
 .aicsu-callout--caution h3 { color: var(--aicsu-black); }
 
@@ -394,8 +426,8 @@
 }
 
 .aicsu-table thead th {
-  background-color: var(--aicsu-green);
-  color: var(--aicsu-white);                 /* AAA */
+  background-color: var(--aicsu-blue);
+  color: var(--aicsu-white);                 /* 14.07 AAA */
   text-align: left;
   font-weight: 700;
   padding: 0.75rem 1rem;
@@ -414,7 +446,7 @@
 
 .aicsu-table tbody th {
   font-weight: 700;
-  color: var(--aicsu-green);
+  color: var(--aicsu-blue);
   text-align: left;
 }
 
@@ -457,7 +489,7 @@
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
-  background-color: var(--aicsu-green);
+  background-color: var(--aicsu-blue);
   color: var(--aicsu-white);
   font-weight: 700;
   font-size: var(--aicsu-size-small);
@@ -485,7 +517,7 @@
 }
 
 .aicsu-linklist li a:hover {
-  color: var(--aicsu-green);
+  color: var(--aicsu-blue);
   text-decoration: underline;
 }
 
@@ -494,21 +526,26 @@
    10. QUALITY FLOOR
    -------------------------------------------------------------------------- */
 
-/* Visible keyboard focus everywhere in the layer. Aggie Orange reads
-   clearly against white, tan, gray and CSU Green backgrounds. */
+/* Visible keyboard focus everywhere in the layer. Global Red clears 3:1
+   against white (7.07), Sand (5.06), Sky (4.84) and Blush (5.26). It fails
+   against Pueblo Blue (1.99), so blue sections switch the ring to CSU Gold
+   (7.63). */
 .aicsu-section a:focus-visible,
 .aicsu-section button:focus-visible,
 .aicsu-section .wp-block-button__link:focus-visible,
 .aicsu-section .wp-element-button:focus-visible {
-  outline: 3px solid var(--aicsu-orange);
+  outline: 3px solid var(--aicsu-focus);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
+.aicsu-section--blue { --aicsu-focus: var(--aicsu-gold); }
+
 .aicsu-section a { color: var(--aicsu-link); }
-.aicsu-section--green a { color: var(--aicsu-energy-green); }   /* AAA */
-.aicsu-section--tan a,
-.aicsu-section--gray a { color: var(--aicsu-green); }
+.aicsu-section--blue a { color: var(--aicsu-gold); }            /* 7.63 AAA */
+.aicsu-section--sand a,
+.aicsu-section--sky a,
+.aicsu-section--blush a { color: var(--aicsu-red); }            /* 5.06 / 4.84 / 5.26 AA */
 
 @media (prefers-reduced-motion: reduce) {
   .aicsu-section *,
@@ -529,10 +566,10 @@
 
 /* --------------------------------------------------------------------------
    11. HEADER SEAM
-   Theme header is CSU Green with no bottom edge. When the first section on
-   a page is also .aicsu-section--green (the homepage hero), the two blocks
-   merge into one shape with no boundary. A seam keeps them visually
-   separate regardless of what color the first section uses.
+   Theme header carries its own background with no bottom edge. When the
+   first section on a page is also .aicsu-section--blue (the homepage hero),
+   the two blocks merge into one shape with no boundary. A seam keeps them
+   visually separate regardless of what color the first section uses.
    -------------------------------------------------------------------------- */
 
 #mainheader.site-header {

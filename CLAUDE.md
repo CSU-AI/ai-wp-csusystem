@@ -1,7 +1,10 @@
-# ai.colostate.edu build context
+# ai.csusystem.edu build context
 
-Campus AI site for CSU Fort Collins. Owner: David Edwards, AI Strategist, CSU System.
+Campus AI site for the CSU System. Owner: David Edwards, AI Strategist, CSU System.
 Build locally first, then migrate to production.
+
+Sister site: ai.colostate.edu (CSU Fort Collins). Same build method, same class
+names, different palette. Do not carry Fort Collins colors into this repo.
 
 ## Constraints
 
@@ -17,49 +20,67 @@ Build locally first, then migrate to production.
 
 ## Palette
 
-Source: https://brand.colostate.edu/color/ (Find Your Energy brand).
-Previous CSU secondary and tertiary palettes are retired.
+Source: CSU System Brand Guidelines, 04/2020. The Fort Collins "Find Your Energy"
+palette does not apply here. There is no CSU System equivalent of colostate.edu's
+brand site, so this file is the reference.
 
 | Role | Name | Hex |
 |---|---|---|
-| Primary | Colorado State Green | `#1E4D2B` |
-| Primary | Colorado State Gold | `#C8C372` |
-| Primary | Aggie Orange | `#D9782D` |
-| Primary | 80% Black | `#59595B` |
-| Energy | Oval Green | `#006144` |
-| Energy | Lovers Lane | `#82C503` |
-| Energy | Energy Green | `#CFFC00` |
-| Energy | Flower Trial Red | `#E56A54` |
-| Energy | Powered Purple | `#7E5475` |
-| Energy | Horsetooth Blue | `#008FB3` |
-| Energy | Stalwart Slate | `#105456` |
-| Energy | Sunshine | `#FFC038` |
-| Neutral | Gray | `#CCCCCC` |
-| Neutral | Tan | `#E3CDB1` |
+| Primary | Pueblo Blue | `#1F2759` |
+| Primary | CSU Gold | `#C7C271` |
+| Primary | Global Red | `#AA1E40` |
+| Secondary | Rose | `#C7A2A5` |
+| Secondary | Pewter | `#99AFB6` |
+| Secondary | Light Gold | `#CDC79B` |
+| Secondary | Blush | `#E5DCDE` |
+| Secondary | Sky | `#CAD8DC` |
+| Secondary | Sand | `#DDDBC7` |
+| Tertiary | Poppy | `#F15647` |
+| Tertiary | Ocean | `#37A0A5` |
+| Tertiary | Slate | `#59595B` |
 
-**Only use pairings on CSU's published accessibility chart.** Pairings not on the
-chart are not approved for university use. The ones this site relies on:
+Brand color hierarchy is **Pueblo Blue 60%, CSU Gold 20%, Global Red 20%**. Hold
+that ratio across the site. Secondary tints support the primaries and do not
+replace them. Tertiary colors are accents only, used sparingly.
 
-| Background | Approved text |
-|---|---|
-| White | Black (AAA), Primary Green (AAA), Stalwart Slate (AAA), Oval Green (AAA), 80% Black (AA) |
-| CSU Green | White (AAA), Energy Green (AAA), Gold (AA) |
-| Tan | Primary Green (AA), Stalwart Slate (AA), Oval Green (AA) |
-| Gray | Black (AAA), Primary Green (AA), Stalwart Slate (AA), Oval Green (AA) |
-| Sunshine | Black (AAA), Primary Green (AA) |
+The System brand guide publishes no accessibility chart. Every pairing below was
+measured against WCAG 2.1; ratios are in the table and repeated inline in the CSS.
+Measure any new pairing before using it.
 
-Target proportions across the site, per brand guidance: roughly one third CSU Green,
-one sixth white, then Gold, Oval Green, and Energy Green at about 9% each, with the
-remaining Energy colors used sparingly.
+| Background | Approved text | Ratio |
+|---|---|---|
+| White | Black | 21.00 AAA |
+| White | Pueblo Blue | 14.07 AAA |
+| White | Global Red | 7.07 AAA |
+| White | Slate | 6.99 AA |
+| Pueblo Blue | White | 14.07 AAA |
+| Pueblo Blue | CSU Gold | 7.63 AAA |
+| Sand | Pueblo Blue | 10.07 AAA |
+| Sky | Pueblo Blue | 9.62 AAA |
+| Blush | Pueblo Blue | 10.47 AAA |
+| CSU Gold | Black | 11.38 AAA |
+| Poppy | Black | 6.16 AA |
+| Ocean | Black | 6.73 AA |
 
-Typography is owned by the theme. Do not set `font-family` anywhere.
+Never do these:
+
+- **CSU Gold text on white** is 1.84. Gold is a background or a color on Pueblo
+  Blue, never body text on white.
+- **Poppy or Ocean as text on white** is 3.41 and 3.12. Both are keylines,
+  icons and graphics only.
+- **Global Red on Pueblo Blue** is 1.99. The two primaries never sit on each other.
+- **Rose, Pewter, Light Gold, Blush, Sky, Sand as text** on white. All below 2.3.
+
+Typography is owned by the theme. Do not set `font-family` anywhere. For reference,
+the brand fonts are Industry (headlines), Proxima Nova (body sans), Minion Pro
+(body serif). The guide caps a single design at three weights and four type sizes.
 
 ## Component classes
 
 | Class | Applies to | Purpose |
 |---|---|---|
 | `aicsu-section` | Group block, full width | Vertical rhythm. Replaces `<hr>` dividers. |
-| `aicsu-section--green` / `--tan` / `--gray` | same Group | Background tint. Color only, never spacing. |
+| `aicsu-section--blue` / `--sand` / `--sky` / `--blush` | same Group | Background tint. Color only, never spacing. |
 | `aicsu-section--tight` | same Group | Half vertical padding for utility strips. |
 | `aicsu-inner` | nested Group | Content max-width, centered. Every section needs one. |
 | `aicsu-eyebrow` | Paragraph | Small uppercase label above a heading. |
@@ -68,7 +89,7 @@ Typography is owned by the theme. Do not set `font-family` anywhere.
 | `aicsu-card` | Column block | Card face with accent keyline. |
 | `aicsu-card--tools/teaching/research/training/support/news/governance` | Column block | Sets the accent color. |
 | `aicsu-card__cta` | Buttons block inside a card | Pins the button to the card's bottom edge. |
-| `aicsu-btn--primary` / `--secondary` | Button block wrapper | Brand buttons. Inverts automatically on green sections. |
+| `aicsu-btn--primary` / `--secondary` | Button block wrapper | Brand buttons. Inverts automatically on blue sections. |
 | `aicsu-callout` | Group block | Bordered aside. `--action` and `--caution` variants. |
 | `aicsu-table` | Table block | Comparison matrix styling. |
 | `aicsu-steps` | ordered List block | Numbered process. Use only where order matters. |
@@ -82,9 +103,12 @@ Section pattern is always: full-width Group with `aicsu-section` → nested Grou
 The card top border is wayfinding, not decoration. One accent per card, matched to
 the destination section, used nowhere else on the page:
 
-Tools = CSU Green · Teaching = Powered Purple · Research = Horsetooth Blue ·
-Training = Aggie Orange · IT Support = Stalwart Slate · News = Gold ·
-Governance = Oval Green
+Tools = Pueblo Blue · Teaching = Ocean · Research = Slate · Training = Poppy ·
+IT Support = Slate · News = Global Red · Governance = Pueblo Blue
+
+Five accents, not seven. CSU Gold (1.84 on white) and Pewter (2.29) are too faint
+to read as a signal. Tools/Governance and Research/Support share an accent, so
+cards from a shared pair must never appear in the same row.
 
 ## Working rules
 
@@ -106,9 +130,12 @@ density, type contrast, accent count, section rhythm, image discipline, alignmen
 - No em dashes. Use a period, semicolon, comma, or restructure.
 - No filler: leverage, circle back, excited to share, thrilled, robust, seamless.
 - Direct and assertive. No hedging.
-- Sentence case in body copy, Title Case for headings and buttons to match the
-  rest of colostate.edu.
+- Sentence case in body copy, Title Case for headings and buttons.
 - Name things by what people do, not by how the system works.
+- First reference in a piece is "Colorado State University System". Second and
+  after is "CSU System". Never "CSU" alone, which means Fort Collins.
+- "the" before CSU System is allowed but is not part of the name, so it stays
+  lowercase.
 
 ## Migration to production
 
