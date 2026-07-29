@@ -329,7 +329,8 @@
 }
 
 /* Theme icon rules otherwise repaint Font Awesome glyphs black. */
-.aicsu-card__icon .fa-solid {
+.aicsu-card__icon .fa-solid,
+.aicsu-card__icon .fa-solid::before {
   color: currentColor !important;
   line-height: 1;
 }
