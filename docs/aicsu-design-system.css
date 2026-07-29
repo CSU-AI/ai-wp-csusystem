@@ -300,7 +300,10 @@
   --color: var(--aicsu-ink);
 }
 
-.aicsu-card h3 { color: var(--aicsu-blue); }
+/* Chained through .aicsu-section to reach (0,3,1). The section heading rules
+   in part 2 are also (0,3,1) and would otherwise win on source order, which
+   on a blue section paints a white heading onto the card's white face. */
+.aicsu-section .aicsu-card h3 { color: var(--aicsu-blue); }
 
 .aicsu-card p {
   font-size: var(--aicsu-size-body);
@@ -435,7 +438,8 @@
   --color: var(--aicsu-ink);        /* white face, same reason as the card */
 }
 
-.aicsu-callout h3 { color: var(--aicsu-blue); }
+/* Same (0,3,1) chain as the card heading, for the same reason. */
+.aicsu-section .aicsu-callout h3 { color: var(--aicsu-blue); }
 .aicsu-callout p:last-child { margin-bottom: 0; }
 
 .aicsu-callout--action  { border-left-color: var(--aicsu-ocean); }
@@ -446,7 +450,7 @@
   color: var(--aicsu-black);                 /* 11.38 AAA */
   --color: var(--aicsu-black);
 }
-.aicsu-callout--caution h3 { color: var(--aicsu-black); }
+.aicsu-section .aicsu-callout--caution h3 { color: var(--aicsu-black); }
 
 
 /* --------------------------------------------------------------------------
