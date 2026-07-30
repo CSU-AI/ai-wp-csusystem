@@ -422,6 +422,11 @@
    which is the one job the keyline has. */
 .aicsu-card--plain { border-top: 1px solid var(--aicsu-rule); }
 
+/* On a tinted section the card's other three borders go transparent so the
+   white face floats, and the keyline rule below repaints border-top with the
+   accent at the same (0,2,0) weight as this rule. Later source order would
+   win there, putting a lone accent hairline on a card that is meant to carry
+   none, so the plain card's exclusion lives on that rule instead. */
 .aicsu-section--sand .aicsu-card--plain,
 .aicsu-section--sky .aicsu-card--plain,
 .aicsu-section--blush .aicsu-card--plain { border-top-color: transparent; }
@@ -438,9 +443,9 @@
 .aicsu-section--sky .aicsu-card,
 .aicsu-section--blush .aicsu-card { border-color: transparent; }
 
-.aicsu-section--sand .aicsu-card,
-.aicsu-section--sky .aicsu-card,
-.aicsu-section--blush .aicsu-card { border-top-color: var(--aicsu-accent); }
+.aicsu-section--sand .aicsu-card:not(.aicsu-card--plain),
+.aicsu-section--sky .aicsu-card:not(.aicsu-card--plain),
+.aicsu-section--blush .aicsu-card:not(.aicsu-card--plain) { border-top-color: var(--aicsu-accent); }
 
 
 /* --------------------------------------------------------------------------
