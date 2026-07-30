@@ -241,6 +241,26 @@
   max-width: 68ch;
 }
 
+/* Prose stacks. Policy pages run heading, copy, list, table, heading again
+   inside one section, and the theme zeroes block margins, so those blocks
+   meet flush with no rhythm at all. Classed paragraphs are excluded because
+   the eyebrow and lede set their own bottom spacing. */
+.aicsu-section p:not([class]) { margin-bottom: var(--aicsu-space-3); }
+
+.aicsu-lede { margin-bottom: var(--aicsu-space-4); }
+
+/* A heading that follows content opens a new topic, so it needs air above it.
+   Section-opening headings are unaffected: they have no preceding sibling. The
+   eyebrow is excluded because it belongs to the heading below it; spacing it
+   away breaks the pair. */
+.aicsu-section :is(p:not(.aicsu-eyebrow), ul, ol, figure, .aicsu-callout, .wp-block-buttons) + h2 {
+  margin-top: var(--aicsu-space-6);
+}
+
+.aicsu-section :is(p:not(.aicsu-eyebrow), ul, ol, figure, .aicsu-callout, .wp-block-buttons) + h3 {
+  margin-top: var(--aicsu-space-4);
+}
+
 /* Small label that sits above a heading. Carries hierarchy without size,
    which is what lets card headings stay small. */
 .aicsu-eyebrow {
@@ -265,6 +285,40 @@
   font-size: var(--aicsu-size-small);
   color: var(--aicsu-ink-muted);
 }
+
+/* Prose lists. Content pages are list-heavy and the theme leaves plain
+   ul/ol at full section width, so lines run to 130 characters while the
+   paragraphs beside them stop at 68ch. Matches paragraph measure, leading
+   and rhythm. The two list components opt out; they own their own layout. */
+.aicsu-section :is(ul, ol):not(.aicsu-linklist):not(.aicsu-steps) {
+  max-width: 68ch;
+  padding-left: 1.5rem;
+  margin: 0 0 var(--aicsu-space-3);
+}
+
+.aicsu-section :is(ul, ol):not(.aicsu-linklist):not(.aicsu-steps) li {
+  font-size: var(--aicsu-size-body);
+  line-height: 1.65;
+  margin-bottom: var(--aicsu-space-1);
+  padding-left: 0.25rem;
+}
+
+/* Marker carries a brand tint so a long list still reads as structured.
+   Global Red clears 3:1 on white (7.07), Sand (5.06), Sky (4.84) and
+   Blush (5.26). It fails on Pueblo Blue (1.99), so blue sections use
+   CSU Gold (7.63). */
+.aicsu-section :is(ul, ol):not(.aicsu-linklist):not(.aicsu-steps) li::marker {
+  color: var(--aicsu-red);
+}
+
+.aicsu-section--blue :is(ul, ol):not(.aicsu-linklist):not(.aicsu-steps) li::marker {
+  color: var(--aicsu-gold);
+}
+
+/* A bold lead-in at the start of a list item is a term, so it takes the
+   heading color rather than sitting at body weight in body color. */
+.aicsu-section :is(ul, ol) li > strong:first-child { color: var(--aicsu-heading); }
+.aicsu-section--blue :is(ul, ol) li > strong:first-child { color: var(--aicsu-gold); }
 
 
 /* --------------------------------------------------------------------------
@@ -311,6 +365,10 @@
   margin-bottom: var(--aicsu-space-3);
 }
 
+/* A card whose last element is copy rather than a CTA would otherwise carry
+   the paragraph's bottom margin on top of the card's padding. */
+.aicsu-card > p:last-child { margin-bottom: 0; }
+
 /* A quiet accent tile makes the card's subject immediately scannable. It
    inherits the existing territory accent, keeping this visual cue aligned
    with the keyline rather than adding a new color system. */
@@ -356,6 +414,17 @@
 .aicsu-card--support    { --aicsu-accent: var(--aicsu-slate); }
 .aicsu-card--news       { --aicsu-accent: var(--aicsu-red);   }
 .aicsu-card--governance { --aicsu-accent: var(--aicsu-blue);  }
+
+/* Fact card. Same geometry as a wayfinding card, no accent keyline, for a
+   grid that groups information instead of leading somewhere: governance
+   roles, responsibilities, definitions. Without this variant those grids
+   would spend accents that mean "this card is a link to that section",
+   which is the one job the keyline has. */
+.aicsu-card--plain { border-top: 1px solid var(--aicsu-rule); }
+
+.aicsu-section--sand .aicsu-card--plain,
+.aicsu-section--sky .aicsu-card--plain,
+.aicsu-section--blush .aicsu-card--plain { border-top-color: transparent; }
 
 /* Two card rows are two separate Columns blocks. The theme zeroes block
    margins, so consecutive rows meet with no gap and the second row's accent
@@ -497,6 +566,9 @@
    7. COMPARISON TABLE
    For /tools/comparison/. Add .aicsu-table to a core Table block.
    -------------------------------------------------------------------------- */
+
+/* Theme zeroes block margins, so a table meets the next paragraph flush. */
+.aicsu-section .aicsu-table { margin-bottom: var(--aicsu-space-3); }
 
 .aicsu-table table {
   width: 100%;

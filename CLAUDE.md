@@ -38,7 +38,18 @@ before adding a selector.
   spacing between blocks comes from the design system.
 - **The footer is painted Pueblo Blue `#1F2759`**, the same value as
   `aicsu-section--blue`. A page does not end on a blue section.
-- The theme page-title band is `main .page-header`, one per page.
+- The theme page-title band is `main .page-header`, one per page. It prints the
+  page title as an **`<h1>`**, so an interior page's content starts at `h2`.
+  Only the homepage hides the band (`.home main .page-header`) and so is the
+  only page whose content carries an `h1`.
+- **The band is painted Pueblo Blue.** An interior page's first section cannot
+  be `aicsu-section--blue`; it would merge with the band the way a trailing blue
+  section merges with the footer.
+- **Font Awesome 6 is loaded by the theme.** Icons are `<i class="fa-solid
+  fa-*">` inside a core HTML block, no plugin and no uploads. Theme icon rules
+  repaint the glyph black, so `.aicsu-card__icon` forces `currentColor`.
+- **The theme leaves plain `ul`/`ol` at full section width**, so list lines run
+  far past the 68ch paragraph measure. The design system sets list measure.
 
 ## Palette
 
@@ -110,6 +121,8 @@ the brand fonts are Industry (headlines), Proxima Nova (body sans), Minion Pro
 | `aicsu-cards` | Columns block | Equal-height card row. |
 | `aicsu-card` | Column block | Card face with accent keyline. |
 | `aicsu-card--tools/teaching/research/training/support/news/governance` | Column block | Sets the accent color. |
+| `aicsu-card--plain` | Column block | Card with no accent keyline. For a grid that groups facts instead of leading somewhere. |
+| `aicsu-card__icon` | HTML block, first child of a card | Tinted tile holding one Font Awesome glyph. Takes the card's accent. |
 | `aicsu-card__cta` | Buttons block inside a card | Pins the button to the card's bottom edge. |
 | `aicsu-btn--primary` / `--secondary` | Button block wrapper | Brand buttons. Inverts automatically on blue sections. |
 | `aicsu-callout` | Group block | Bordered aside. `--action` and `--caution` variants. |
@@ -132,6 +145,28 @@ Five accents, not seven. CSU Gold (1.84 on white) and Pewter (2.29) are too fain
 to read as a signal. Tools/Governance and Research/Support share an accent, so
 cards from a shared pair must never appear in the same row.
 
+## Icons
+
+Font Awesome 6 ships with the theme, so icons need no plugin and no media
+uploads. The tile is a core HTML block, always the card's first child:
+
+```html
+<div class="aicsu-card__icon" role="img" aria-label="Policies and governance">
+  <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+</div>
+```
+
+- The tile derives its fill and border from the card's accent with `color-mix`,
+  so an icon never introduces a color the card does not already carry.
+- `role="img"` plus `aria-label` on the tile, `aria-hidden` on the glyph. The
+  label names the subject, not the shape.
+- One icon per card, `fa-solid` only. Icons are a scanning aid on card grids;
+  they do not appear in body copy, headings or buttons.
+- Glyphs in use: `fa-shield-halved` governance, `fa-chalkboard-user` guidelines,
+  `fa-database` data, `fa-screwdriver-wrench` tools, `fa-book-open` resources,
+  `fa-calendar-days` news, `fa-landmark` Board of Governors, `fa-server` CIOs,
+  `fa-sitemap` campus leads. Reuse these before adding a new one.
+
 ## Working rules
 
 - Fix problems in the CSS layer or in a synced pattern, never on an individual page.
@@ -140,6 +175,10 @@ cards from a shared pair must never appear in the same row.
   On production, create pages as **draft**. Never publish directly.
 - Compare styling variants by pointing different CSS at the same page markup.
   Do not rebuild the page to compare looks.
+- **The design system `<link>` is emitted late in the document, not in `<head>`.**
+  To preview an unpushed CSS change in the browser, inject the `<style>` into
+  `document.body`, not `document.head`; a head injection loses the cascade to
+  the live file on equal specificity and the preview silently shows old styles.
 - Prefer CSS and inline SVG over images. Images have to be re-uploaded on production.
 - Screenshot the rendered page and review it there. Do not judge layout from markup.
 - A draft preview (`?page_id=N&preview=true`) does not carry the `.home` body
