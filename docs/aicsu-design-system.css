@@ -253,11 +253,11 @@
    Section-opening headings are unaffected: they have no preceding sibling. The
    eyebrow is excluded because it belongs to the heading below it; spacing it
    away breaks the pair. */
-.aicsu-section :is(p:not(.aicsu-eyebrow), ul, ol, figure, .aicsu-callout, .wp-block-buttons) + h2 {
+.aicsu-section :is(p:not(.aicsu-eyebrow), ul, ol, figure, .aicsu-callout, .wp-block-buttons, .wp-block-columns) + h2 {
   margin-top: var(--aicsu-space-6);
 }
 
-.aicsu-section :is(p:not(.aicsu-eyebrow), ul, ol, figure, .aicsu-callout, .wp-block-buttons) + h3 {
+.aicsu-section :is(p:not(.aicsu-eyebrow), ul, ol, figure, .aicsu-callout, .wp-block-buttons, .wp-block-columns) + h3 {
   margin-top: var(--aicsu-space-4);
 }
 
@@ -437,6 +437,12 @@
    one 6-cell table rather than two rows of cards. Matches the in-row gap so
    horizontal and vertical rhythm agree. */
 .aicsu-cards + .aicsu-cards { margin-top: var(--aicsu-space-3); }
+
+/* Same fault where a card row is followed by anything else: a callout or a
+   paragraph lands flush against the row's bottom border and reads as part of
+   the last card. Headings are excluded because the heading rules in part 3
+   give them a larger opening gap. */
+.aicsu-cards + :not(.aicsu-cards, h2, h3) { margin-top: var(--aicsu-space-4); }
 
 /* Cards sitting on a tinted section keep a white face so they lift off it. */
 .aicsu-section--sand .aicsu-card,
