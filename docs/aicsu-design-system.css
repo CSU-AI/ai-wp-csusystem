@@ -558,6 +558,12 @@
   --color: var(--aicsu-ink);        /* white face, same reason as the card */
 }
 
+/* A callout always follows something: a paragraph, a list, a card row. The
+   theme zeroes block margins, so without this it lands flush against that
+   block and reads as part of it rather than as an aside about it. Adjacent
+   margins collapse, so a paragraph's own bottom margin does not stack. */
+.aicsu-inner * + .aicsu-callout { margin-top: var(--aicsu-space-4); }
+
 /* Same (0,3,1) chain as the card heading, for the same reason. */
 .aicsu-section .aicsu-callout h3 { color: var(--aicsu-blue); }
 .aicsu-callout p:last-child { margin-bottom: 0; }
@@ -682,6 +688,10 @@
   color: var(--aicsu-blue);
   text-decoration: underline;
 }
+
+/* The list itself carries no margin so its first row aligns with the heading
+   above it. Whatever follows it needs the gap instead. */
+.aicsu-linklist + * { margin-top: var(--aicsu-space-4); }
 
 
 /* --------------------------------------------------------------------------
