@@ -728,11 +728,19 @@
   }
 }
 
-/* Core Columns stack below 782px by default. Cards get breathing room
-   back once stacked. */
+/* Core Columns stack below 782px by default, but the theme's s-grid class
+   forces the row to nowrap, so three cards squeeze side by side. Restate the
+   stack here. The card's flex-basis 0 would collapse its height in a column,
+   so it resets to auto. */
 @media (max-width: 781px) {
-  .aicsu-cards { gap: var(--aicsu-space-2); }
-  .aicsu-card  { margin-bottom: var(--aicsu-space-2); }
+  .aicsu-cards {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: var(--aicsu-space-2);
+  }
+  .aicsu-card {
+    flex: 0 0 auto !important;
+  }
 }
 
 
