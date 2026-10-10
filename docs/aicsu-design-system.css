@@ -48,6 +48,7 @@
      table banding where no brand color applies. */
   --aicsu-rule:         #DCDCDC;
   --aicsu-band:         #F7F7F7;
+  --aicsu-surface:      var(--aicsu-white);   /* section fill; tints override */
 
   /* --- Semantic roles ---
      Ratios are against white unless stated. */
@@ -147,6 +148,7 @@
 .aicsu-section--blue,
 .aicsu-section.aicsu-section--blue {
   background-color: var(--aicsu-blue);
+  --aicsu-surface: var(--aicsu-blue);
   color: var(--aicsu-white);                 /* 14.07 AAA */
   --color: var(--aicsu-white);
 }
@@ -163,6 +165,7 @@
 .aicsu-section--sand,
 .aicsu-section.aicsu-section--sand {
   background-color: var(--aicsu-sand);
+  --aicsu-surface: var(--aicsu-sand);
   color: var(--aicsu-blue);                  /* 10.07 AAA */
   --color: var(--aicsu-blue);
 }
@@ -170,6 +173,7 @@
 .aicsu-section--sky,
 .aicsu-section.aicsu-section--sky {
   background-color: var(--aicsu-sky);
+  --aicsu-surface: var(--aicsu-sky);
   color: var(--aicsu-blue);                  /*  9.62 AAA */
   --color: var(--aicsu-blue);
 }
@@ -177,6 +181,7 @@
 .aicsu-section--blush,
 .aicsu-section.aicsu-section--blush {
   background-color: var(--aicsu-blush);
+  --aicsu-surface: var(--aicsu-blush);
   color: var(--aicsu-blue);                  /* 10.47 AAA */
   --color: var(--aicsu-blue);
 }
@@ -626,10 +631,40 @@
   margin-top: var(--aicsu-space-2);
 }
 
-/* Horizontal scroll on small screens instead of a squashed table. */
+/* Horizontal scroll on small screens instead of a squashed table.
+   WCAG 1.4.10 exempts two-dimensional data tables from reflow. The row
+   header column stays pinned so a row keeps its label while scrolling, and
+   its edge shadow shows that more columns sit off screen. Pinned cells need
+   an opaque fill, so they take the section surface (--aicsu-surface) or the
+   band color on even rows. */
 @media (max-width: 780px) {
-  .aicsu-table { overflow-x: auto; }
+  .aicsu-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
   .aicsu-table table { min-width: 640px; }
+
+  .aicsu-table thead th:first-child,
+  .aicsu-table tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    min-width: 7.5rem;
+    box-shadow: 6px 0 8px -3px rgba(0, 0, 0, 0.35);
+  }
+  .aicsu-table thead th:first-child { background-color: var(--aicsu-blue); }
+  .aicsu-table tbody th { background-color: var(--aicsu-surface); }
+  .aicsu-table tbody tr:nth-child(even) th { background-color: var(--aicsu-band); }
+
+  /* Keep the caption in view instead of scrolling away with the table. */
+  .aicsu-table figcaption { position: sticky; left: 0; }
+}
+
+/* The scroll region takes focus so keyboard users can scroll it. */
+.aicsu-table:focus-visible {
+  outline: 3px solid var(--aicsu-focus);
+  outline-offset: 2px;
 }
 
 
